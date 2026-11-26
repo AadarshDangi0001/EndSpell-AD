@@ -59,7 +59,8 @@ export const tools = [
 ]
 
 /* ---------- Courses ----------
-   cat: dev | data | design | marketing                                    */
+   cat: dev | data | design | marketing
+   thumb: image in /public/courses (16:9 works best). Without it, the card shows the orange design.                                    */
 export const courseTabs = [
   { id: 'all', label: 'All' },
   { id: 'dev', label: 'Development' },
@@ -69,12 +70,15 @@ export const courseTabs = [
 ]
 
 export const courses = [
-  { cat: 'dev', label: 'Development', title: 'Full Stack Web Development', short: 'Full Stack', desc: 'Go from HTML basics to deploying full MERN apps.', weeks: '24 weeks', lessons: '180+ lessons', level: 'Beginner', price: '₹4,999', mrp: '₹12,999', badge: 'Bestseller', icon: SiReact, iconColor: '#61DAFB' },
-  { cat: 'data', label: 'Data & AI', title: 'Data Science & Machine Learning', short: 'Data Science', desc: 'Python, statistics, ML models and real datasets.', weeks: '20 weeks', lessons: '150+ lessons', level: 'Intermediate', price: '₹5,999', mrp: '₹14,999', badge: 'New', icon: SiPython, iconColor: '#FFD43B' },
-  { cat: 'dev', label: 'Development', title: 'DSA & Placement Preparation', short: 'DSA + Placement', desc: 'Crack coding rounds with 300+ curated problems.', weeks: '16 weeks', lessons: '120+ lessons', level: 'All levels', price: '₹3,499', mrp: '₹8,999', badge: 'Popular', icon: SiJavascript, iconColor: '#F7DF1E' },
-  { cat: 'design', label: 'Design', title: 'UI/UX Design with Figma', short: 'UI / UX Design', desc: 'Design beautiful apps and build a case-study portfolio.', weeks: '12 weeks', lessons: '90+ lessons', level: 'Beginner', price: '₹3,999', mrp: '₹9,999', badge: 'Trending', icon: SiFigma, iconColor: '#F24E1E' },
-  { cat: 'data', label: 'Data & AI', title: 'Generative AI & Prompt Engineering', short: 'Generative AI', desc: 'Use AI tools to work faster and build AI apps.', weeks: '8 weeks', lessons: '60+ lessons', level: 'Beginner', price: '₹2,499', mrp: '₹6,999', badge: 'Hot', icon: SiGooglegemini, iconColor: '#C4B5FD' },
-  { cat: 'marketing', label: 'Marketing', title: 'Digital Marketing & Meta Ads', short: 'Digital Marketing', desc: 'SEO, social media, performance ads and analytics.', weeks: '10 weeks', lessons: '80+ lessons', level: 'Beginner', price: '₹2,999', mrp: '₹7,999', badge: 'New', icon: SiMeta, iconColor: '#0866FF' },
+  { cat: 'dev', label: 'Development', title: 'Full Stack Web Development', thumb: '/courses/full-stack.jpg', short: 'Full Stack', desc: 'Go from HTML basics to deploying full MERN apps.', weeks: '24 weeks', lessons: '180+ lessons', level: 'Beginner', price: '₹4,999', mrp: '₹12,999', badge: 'Bestseller', icon: SiReact, iconColor: '#61DAFB' },
+  { cat: 'data', label: 'Data & AI', title: 'Data Science & Machine Learning', thumb: '/courses/data-science.jpg', short: 'Data Science', desc: 'Python, statistics, ML models and real datasets.', weeks: '20 weeks', lessons: '150+ lessons', level: 'Intermediate', price: '₹5,999', mrp: '₹14,999', badge: 'New', icon: SiPython, iconColor: '#FFD43B' },
+  { cat: 'dev', label: 'Development', title: 'DSA & Placement Preparation', thumb: '/courses/dsa-placement.jpg', short: 'DSA + Placement', desc: 'Crack coding rounds with 300+ curated problems.', weeks: '16 weeks', lessons: '120+ lessons', level: 'All levels', price: '₹3,499', mrp: '₹8,999', badge: 'Popular', icon: SiJavascript, iconColor: '#F7DF1E' },
+  // HIDDEN FOR NOW — remove the "// " to show again
+  // { cat: 'design', label: 'Design', title: 'UI/UX Design with Figma', short: 'UI / UX Design', desc: 'Design beautiful apps and build a case-study portfolio.', weeks: '12 weeks', lessons: '90+ lessons', level: 'Beginner', price: '₹3,999', mrp: '₹9,999', badge: 'Trending', icon: SiFigma, iconColor: '#F24E1E' },
+  // HIDDEN FOR NOW — remove the "// " to show again
+  // { cat: 'data', label: 'Data & AI', title: 'Generative AI & Prompt Engineering', short: 'Generative AI', desc: 'Use AI tools to work faster and build AI apps.', weeks: '8 weeks', lessons: '60+ lessons', level: 'Beginner', price: '₹2,499', mrp: '₹6,999', badge: 'Hot', icon: SiGooglegemini, iconColor: '#C4B5FD' },
+  // HIDDEN FOR NOW — remove the "// " to show again
+  // { cat: 'marketing', label: 'Marketing', title: 'Digital Marketing & Meta Ads', short: 'Digital Marketing', desc: 'SEO, social media, performance ads and analytics.', weeks: '10 weeks', lessons: '80+ lessons', level: 'Beginner', price: '₹2,999', mrp: '₹7,999', badge: 'New', icon: SiMeta, iconColor: '#0866FF' },
 ]
 
 /* ---------- Mentors ----------

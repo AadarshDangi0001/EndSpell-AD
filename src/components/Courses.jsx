@@ -15,7 +15,18 @@ const CourseCard = forwardRef(function CourseCard({ c, i }, ref) {
       transition={{ duration: 0.7, ease: EASE, delay: i * 0.06 }}
       className="group flex flex-col rounded-[22px] border border-line bg-card p-3 transition-colors duration-300 hover:border-brand/60"
     >
-      <div className="relative flex h-[190px] flex-col justify-between overflow-hidden rounded-[14px] bg-[#0f0f0f] p-4">
+      {c.thumb ? (
+        <div className="relative aspect-video overflow-hidden rounded-[14px] bg-[#0f0f0f]">
+          <img
+            src={c.thumb}
+            alt={c.title}
+            loading="lazy"
+            className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          />
+          <span className="absolute left-3 top-3 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white backdrop-blur">{c.badge}</span>
+        </div>
+      ) : (
+        <div className="relative flex h-[190px] flex-col justify-between overflow-hidden rounded-[14px] bg-[#0f0f0f] p-4">
         <div
           className="sun grain absolute -right-10 -top-10 size-[170px] rounded-full transition-transform duration-700 ease-out group-hover:scale-125"
           style={{ background: `radial-gradient(circle at 35% 30%, #ff9a4a, ${palette[i % palette.length]} 55%, #7a1d08)` }}
@@ -26,6 +37,7 @@ const CourseCard = forwardRef(function CourseCard({ c, i }, ref) {
           <Icon className="size-6" style={{ color: c.iconColor }} />
         </span>
       </div>
+      )}
       <div className="flex flex-1 flex-col px-2 pb-1.5 pt-4">
         <span className="text-xs uppercase tracking-[.12em] text-brand-2">{c.label}</span>
         <h3 className="mb-2 mt-1 text-lg font-semibold leading-snug">{c.title}</h3>
@@ -48,6 +60,8 @@ const CourseCard = forwardRef(function CourseCard({ c, i }, ref) {
 export default function Courses() {
   const [tab, setTab] = useState('all')
   const list = courses.filter((c) => tab === 'all' || c.cat === tab)
+  // only show tabs that have at least one course
+  const tabs = courseTabs.filter((t) => t.id === 'all' || courses.some((c) => c.cat === t.id))
 
   return (
     <section id="courses" className="bg-surface py-28">
@@ -58,7 +72,7 @@ export default function Courses() {
           accent="you can put to work."
           right={
             <div className="flex flex-wrap gap-2">
-              {courseTabs.map((t) => (
+              {tabs.map((t) => (
                 <button
                   key={t.id}
                   onClick={() => setTab(t.id)}
@@ -80,9 +94,6 @@ export default function Courses() {
           </AnimatePresence>
         </motion.div>
 
-        <div className="mt-12 text-center">
-          <a href="#" className="btn btn-light btn-lg">View all courses <span className="arrow">↗</span></a>
-        </div>
       </div>
     </section>
   )
