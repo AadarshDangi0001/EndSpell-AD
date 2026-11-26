@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion'
 import { stats, stripWords, tools, palette } from '../data/content'
-import { Counter, Reveal, SectionHead, Star, EASE } from './ui'
+import { Counter, Reveal, SectionHead, Star, EASE, illustratedAvatar } from './ui'
+
+/* seeds for the illustrated learner avatars (any text works — each gives a different face) */
+const FACE_SEEDS = ['Aarav', 'Diya', 'Kabir', 'Meera', 'Vivaan', 'Ananya', 'Ishaan', 'Saanvi', 'Reyansh', 'Aadhya', 'Arjun', 'Kiara', 'Advait', 'Myra', 'Vihaan']
 
 /* Tilted orange marquee strip */
 export function Strip() {
@@ -68,18 +71,20 @@ export default function Why() {
             <Num><Counter to={stats.learners} suffix="+" /></Num>
             <p className="mt-1.5 text-[#dcd8d0]">Learners in the community</p>
             <div className="absolute inset-x-6 bottom-6 grid grid-cols-5 gap-2">
-              {Array.from({ length: 15 }, (_, i) => (
-                <motion.span
-                  key={i}
+              {FACE_SEEDS.map((seed, i) => (
+                <motion.img
+                  key={seed}
+                  src={illustratedAvatar(seed)}
+                  alt=""
+                  loading="lazy"
                   initial={{ scale: 0.4, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 0.5 + 0.5 * (((i * 7) % 10) / 10) }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  whileHover={{ scale: 1.12, y: -3 }}
                   viewport={{ once: true }}
                   transition={{ type: 'spring', stiffness: 260, damping: 18, delay: 0.3 + i * 0.035 }}
-                  className="grid aspect-square place-items-center rounded-full text-[.7rem] font-semibold"
+                  className="aspect-square w-full rounded-full border-2 border-card object-cover"
                   style={{ background: palette[i % palette.length] }}
-                >
-                  {String.fromCharCode(65 + ((i * 5) % 26))}
-                </motion.span>
+                />
               ))}
             </div>
           </Tile>
