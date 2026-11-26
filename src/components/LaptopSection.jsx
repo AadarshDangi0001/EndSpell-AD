@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import {
-  motion, useMotionTemplate, useMotionValueEvent, useScroll, useSpring, useTransform, easeInOut,
+  motion, useMotionValueEvent, useScroll, useSpring, useTransform, easeInOut,
 } from 'framer-motion'
 import { SiGooglechrome, SiFigma, SiSpotify, SiNotion, SiYoutube, SiWhatsapp } from 'react-icons/si'
 import { FaFolder, FaFingerprint, FaApple, FaWifi, FaBatteryFull, FaMagnifyingGlass, FaPlay, FaPause, FaCode, FaLock } from 'react-icons/fa6'
@@ -37,9 +37,9 @@ function LockScreen({ stage, unlock, clock }) {
       className="absolute inset-0 flex flex-col items-center overflow-hidden text-white"
       initial={false}
       animate={
-        stage === 'off' ? { opacity: 0, scale: 1.04, filter: 'blur(0px)' }
-          : stage === 'lock' ? { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }
-            : { opacity: 0, y: -60, scale: 1.02, filter: 'blur(14px)' }
+        stage === 'off' ? { opacity: 0, scale: 1.04 }
+          : stage === 'lock' ? { opacity: 1, scale: 1, y: 0 }
+            : { opacity: 0, y: -60, scale: 1.02 }
       }
       transition={{ duration: 0.8, ease: EASE }}
       style={{ background: 'radial-gradient(circle at 72% 18%, #ff9a4a, #f2381d 38%, #4a0f05 82%)' }}
@@ -50,7 +50,7 @@ function LockScreen({ stage, unlock, clock }) {
       <div className="relative text-[170px] font-semibold leading-none tracking-[-4px]">{clock.time}</div>
 
       <div className="absolute bottom-[60px] flex flex-col items-center gap-3">
-        <div className="grid size-[84px] place-items-center rounded-full bg-white/20 backdrop-blur-md">
+        <div className="grid size-[84px] place-items-center rounded-full bg-white/25">
           <Star white className="size-11" />
         </div>
         <b className="text-xl font-medium">EndSpell Student</b>
@@ -94,12 +94,12 @@ function Desktop({ stage, clock }) {
     <motion.div
       className="absolute inset-0 overflow-hidden"
       initial={false}
-      animate={on ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : { opacity: 0, scale: 1.06, filter: 'blur(12px)' }}
+      animate={on ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.06 }}
       transition={{ duration: 0.9, ease: EASE }}
       style={{ background: 'radial-gradient(circle at 20% 110%, #ff8a2b, #c2410c 30%, #1a0805 70%)' }}
     >
       {/* macOS menu bar */}
-      <div className="flex h-[30px] items-center justify-between bg-black/35 px-5 text-[14px] text-white/90 backdrop-blur-md">
+      <div className="flex h-[30px] items-center justify-between bg-black/55 px-5 text-[14px] text-white/90">
         <div className="flex items-center gap-5"><FaApple className="size-4" /><b className="font-semibold">Chrome</b><span>File</span><span>Edit</span><span>View</span><span>History</span></div>
         <div className="flex items-center gap-4"><FaWifi /><FaBatteryFull className="size-5" /><FaMagnifyingGlass /><span>{clock.short} {clock.time}</span></div>
       </div>
@@ -225,7 +225,7 @@ function Desktop({ stage, clock }) {
 
       {/* Dock */}
       <motion.div
-        className="absolute bottom-[14px] left-1/2 flex -translate-x-1/2 items-end gap-2.5 rounded-[22px] border border-white/15 bg-white/15 px-3 py-2.5 backdrop-blur-xl"
+        className="absolute bottom-[14px] left-1/2 flex -translate-x-1/2 items-end gap-2.5 rounded-[22px] border border-white/20 bg-[#5a3326]/80 px-3 py-2.5"
         initial={false}
         animate={on ? 'show' : 'hide'}
         variants={{ show: { transition: { staggerChildren: 0.05, delayChildren: 0.25 } }, hide: {} }}
@@ -279,7 +279,10 @@ export function MacBook({ lidDeg, screenDark, glareX, children }) {
     ro.observe(el)
     return () => ro.disconnect()
   }, [])
-  const lidTransform = useMotionTemplate`perspective(7358.57px) rotateX(${lidDeg}deg)`
+  // While opening: real 3D. Fully open: plain flat layer — iOS Safari can turn
+  // big 3D layers black once they hold lots of content, so we drop 3D at rest.
+  const lidTransform = useTransform(lidDeg, (d) => (d > -0.4 ? 'none' : `perspective(7358.57px) rotateX(${d}deg)`))
+  const lidStyle = useTransform(lidDeg, (d) => (d > -0.4 ? 'flat' : 'preserve-3d'))
 
   return (
     <div ref={wrapRef} className="macbook absolute inset-0">
@@ -297,7 +300,7 @@ export function MacBook({ lidDeg, screenDark, glareX, children }) {
         {/* Lid */}
         <motion.div
           className="absolute will-change-transform"
-          style={{ left: 90, top: 0, width: 1320, height: 850, transformOrigin: '50% calc(100% + 6px)', transform: lidTransform, transformStyle: 'preserve-3d' }}
+          style={{ left: 90, top: 0, width: 1320, height: 850, transformOrigin: '50% calc(100% + 6px)', transform: lidTransform, transformStyle: lidStyle }}
         >
           {EDGE.map(([l, t, w, h, r, a, b], i) => (
             <div
@@ -389,7 +392,7 @@ export default function LaptopSection() {
       <div ref={trackRef} className="relative -mt-[34svh] h-[260vh] max-sm:-mt-[18svh] max-sm:h-[210vh]">
         <motion.div className="pointer-events-none sticky top-0 flex h-[100svh] flex-col items-center justify-center overflow-hidden" style={{ backgroundColor: bg }}>
           {/* orange glow behind the laptop once it's on */}
-          <motion.div className="sun pointer-events-none absolute left-1/2 top-1/2 size-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[120px]" style={{ opacity: glow }} />
+          <motion.div className="pointer-events-none absolute left-1/2 top-1/2 size-[110vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,95,31,.55)_0%,rgba(242,56,29,.18)_38%,transparent_68%)]" style={{ opacity: glow }} />
 
           <motion.div
             className="relative"
